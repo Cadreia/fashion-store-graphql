@@ -7,9 +7,10 @@ const MenuItem = ({title, imageUrl, linkUrl, size}) => {
     }
 
     return (
-        <div className={`${size} menu-item`} style={styles}>
+        <div className={`${size} menu-item`} >
+         <div className="background-img" style={styles}></div>
           <div className="content">
-            <h2 className="title">{title}</h2>
+            <h2 className="title">{title.toUpperCase()}</h2>
             <span className="subtitle">SHOP NOW</span>
           </div>
         </div>
