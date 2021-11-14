@@ -4,7 +4,7 @@ import { useNavigate, useLocation, useParams } from 'react-router-dom'
 
 const MenuItem = ({title, imageUrl, linkUrl, size}) => {
     let navigate = useNavigate()
-    let location = useLocation()
+    // let location = useLocation()
     // let { slug } = useParams()
 
     const styles = {
