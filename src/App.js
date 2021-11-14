@@ -2,7 +2,7 @@ import React from 'react';
 import './App.css';
 import HomePage from './pages/homepage/homepage.component';
 import { Routes, Route } from 'react-router-dom';
-import HatsPage from './components/hats.component';
+import ShopPage from './pages/shoppage/shoppage.component';
 
 
 function App() {
@@ -10,7 +10,7 @@ function App() {
     <div className="App">
       <Routes>
           <Route exact path="/" element={<HomePage/>}/>
-          <Route exact path="/shop/hats" element={<HatsPage/>} />
+          <Route exact path="/shop" element={<ShopPage/>} />
           {/* <Route exact path="/login" element={<Login/>}/>
           <Route exact path="/recovery-password" element={<RecoveryPassword/>}/>
           <Route path="*" element={<NotFound/>}/> */}

@@ -12,7 +12,7 @@ const MenuItem = ({title, imageUrl, linkUrl, size}) => {
     }
 
     return (
-        <div className={`${size} menu-item`} onClick={() => navigate(`${location.pathname}${linkUrl}`)}>
+        <div className={`${size} menu-item`} onClick={() => navigate('/shop')}>
          <div className="background-img" style={styles}></div>
           <div className="content">
             <h2 className="title">{title.toUpperCase()}</h2>
