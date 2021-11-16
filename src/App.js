@@ -6,14 +6,13 @@ import ShopPage from "./pages/shop/shoppage.component";
 import Header from "./components/header/header.component";
 import Auth from "./components/auth/auth.component";
 import { auth } from "./firebase/firebase.utils";
-import { onAuthStateChanged } from "firebase/auth";
-
+import { onAuthStateChanged, signOut } from "firebase/auth";
 
 class App extends Component {
   constructor() {
     super();
     this.state = {
-      currentUser: "",
+      currentUser: null,
     };
   }
 
@@ -21,12 +20,9 @@ class App extends Component {
 
   componentDidMount() {
     this.unSubscribeFromAuth = onAuthStateChanged(auth, (user) => {
-      this.setState({ currentUser: user });
-      if (this.state.currentUser) {
-        // User is signed in, see docs for a list of available properties
-        // https://firebase.google.com/docs/reference/js/firebase.User
-        // ...
-        console.log(this.state.currentUser);
+      if (user) {
+        // User is signed in
+        this.setState({ currentUser: user });
       } else {
         // No user is signed in.
       }
@@ -37,10 +33,22 @@ class App extends Component {
     this.unSubscribeFromAuth()
   }
 
+  logUserOut = () => {
+    signOut(auth)
+      .then(() => {
+        // Sign-out successful.
+        this.setState({currentUser: null})
+      })
+      .catch((error) => {
+        // An error happened.
+        console.log(error)
+      });
+  };
+
   render() {
     return (
       <div>
-        <Header />
+        <Header currentUser={this.state.currentUser} logUserOut={this.logUserOut} />
         <Routes>
           <Route exact path="/" element={<HomePage />} />
           <Route exact path="/shop" element={<ShopPage />} />
