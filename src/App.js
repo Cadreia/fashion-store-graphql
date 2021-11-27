@@ -4,7 +4,7 @@ import HomePage from "./pages/home/homepage.component";
 import { Routes, Route } from "react-router-dom";
 import ShopPage from "./pages/shop/shoppage.component";
 import Header from "./components/header/header.component";
-import Auth from "./components/auth/auth.component";
+import Auth from "./pages/auth/auth.component";
 import { auth, createUserProfileDocument } from "./firebase/firebase.utils";
 import { onAuthStateChanged, signOut } from "firebase/auth";
 import { onSnapshot } from "firebase/firestore";
@@ -31,13 +31,14 @@ class App extends Component {
             currentUser: {
               id: doc.id,
               ...doc.data(),
-            }
+            },
           });
+          console.log(this.state);
         });
-        
       } else {
         // No user is signed in.
       }
+      this.setState({ currentUser: user });
     });
   }
 
