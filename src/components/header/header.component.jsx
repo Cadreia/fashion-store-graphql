@@ -2,12 +2,12 @@ import React from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import logo from "../../assets/store.png";
+import CartDropdown from "../cart-dropdown/cart-dropdown.component";
 import CartIcon from "../cart-icon/cart-icon.component";
 // import { ReactComponent as Logo } from "../../assets/crown.svg";
 import "./header.styles.scss";
 
-const Header = ({ currentUser, logUserOut }) => {
-
+const Header = ({ currentUser, hidden, logUserOut }) => {
   return (
     <div className="header">
       <Link className="logo-container" to="/">
@@ -18,30 +18,32 @@ const Header = ({ currentUser, logUserOut }) => {
           style={{ height: "3em", width: "3em" }}
         ></img>
       </Link>
-      <div className='options'>
-      <Link className='option' to='/shop'>
-        SHOP
-      </Link>
-      <Link className='option' to='/shop'>
-        CONTACT
-      </Link>
-      <CartIcon />
-      {currentUser ? (
-        <div className='option' onClick={logUserOut}>
-          SIGN OUT
-        </div>
-      ) : (
-        <Link className='option' to='/auth'>
-          SIGN IN
+      <div className="options">
+        <Link className="option" to="/shop">
+          SHOP
         </Link>
-      )}
-    </div>
+        <Link className="option" to="/shop">
+          CONTACT
+        </Link>
+        <CartIcon />
+        {currentUser ? (
+          <div className="option" onClick={logUserOut}>
+            SIGN OUT
+          </div>
+        ) : (
+          <Link className="option" to="/auth">
+            SIGN IN
+          </Link>
+        )}
+      </div>
+      { !hidden && <CartDropdown /> }
     </div>
   );
 };
 
-const mapStateToProps = state => ({
-  currentUser: state.user.currentUser
-})
+const mapStateToProps = ({user: { currentUser }, cart: { hidden }}) => ({
+  currentUser,
+  hidden
+});
 
 export default connect(mapStateToProps)(Header);
