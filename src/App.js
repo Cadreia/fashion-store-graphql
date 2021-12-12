@@ -39,6 +39,7 @@ class App extends Component {
         // No user is signed in.
       }
       this.setState({ currentUser: user });
+      console.log(this.state)
     });
   }
 
