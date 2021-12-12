@@ -2,6 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import logo from "../../assets/store.png";
+import CartIcon from "../cart-icon/cart-icon.component";
 // import { ReactComponent as Logo } from "../../assets/crown.svg";
 import "./header.styles.scss";
 
@@ -24,6 +25,7 @@ const Header = ({ currentUser, logUserOut }) => {
       <Link className='option' to='/shop'>
         CONTACT
       </Link>
+      <CartIcon />
       {currentUser ? (
         <div className='option' onClick={logUserOut}>
           SIGN OUT
