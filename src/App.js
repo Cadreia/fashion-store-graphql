@@ -63,7 +63,6 @@ class App extends Component {
     return (
       <div>
         <Header
-          currentUser={this.state.currentUser}
           logUserOut={this.logUserOut}
         />
         <Routes>
