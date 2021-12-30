@@ -1,4 +1,4 @@
-const addCartItemUtil = (cartItems, cartItemToAdd) => {
+export const addItemToCartUtil = (cartItems, cartItemToAdd) => {
   const existingCartItem = cartItems.find(
     (item) => item.id === cartItemToAdd.id
   );
@@ -13,4 +13,6 @@ const addCartItemUtil = (cartItems, cartItemToAdd) => {
   return [...cartItems, {...cartItemToAdd, quantity: 1}]
 };
 
-export default addCartItemUtil
+export const clearItemFromCartUtil = (cartItems, cartItemToClear) => {
+  return cartItems.filter(cartItem => cartItem.id !== cartItemToClear.id)
+}
