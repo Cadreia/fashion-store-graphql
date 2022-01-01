@@ -13,7 +13,7 @@ import { setCurrentUser } from "./redux/user/user.actions";
 import { createStructuredSelector } from "reselect";
 import { selectCurrentUser } from "./redux/user/user.selector";
 import CheckoutPage from "./pages/checkout/checkout.component";
-import CategoryPage from "./pages/category/category.component";
+import CollectionPage from "./pages/collection/collection.component";
 import CollectionsOverview from "./components/collections-overview/collections-overview.component";
 
 class App extends Component {
@@ -64,7 +64,7 @@ class App extends Component {
           <Route exact path="/" element={<HomePage />} />
           <Route path="/shop" element={<ShopPage />}>
             <Route index element={<CollectionsOverview />} />
-            <Route exact path=":categoryId" element={<CategoryPage />} />
+            <Route exact path=":collectionId" element={<CollectionPage />} />
           </Route>
           <Route exact path="/checkout" element={<CheckoutPage />} />
           <Route
