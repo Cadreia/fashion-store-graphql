@@ -13,6 +13,8 @@ import { setCurrentUser } from "./redux/user/user.actions";
 import { createStructuredSelector } from "reselect";
 import { selectCurrentUser } from "./redux/user/user.selector";
 import CheckoutPage from "./pages/checkout/checkout.component";
+import CategoryPage from "./pages/category/category.component";
+import CollectionsOverview from "./components/collections-overview/collections-overview.component";
 
 class App extends Component {
   unSubscribeFromAuth = null;
@@ -60,12 +62,17 @@ class App extends Component {
         <Header logUserOut={this.logUserOut} />
         <Routes>
           <Route exact path="/" element={<HomePage />} />
-          <Route path="/shop" element={<ShopPage />} />
+          <Route path="/shop" element={<ShopPage />}>
+            <Route index element={<CollectionsOverview />} />
+            <Route exact path=":categoryId" element={<CategoryPage />} />
+          </Route>
           <Route exact path="/checkout" element={<CheckoutPage />} />
           <Route
             exact
             path="/auth"
-            element={this.props.currentUser ? <Navigate replace to="/" /> : <Auth />}
+            element={
+              this.props.currentUser ? <Navigate replace to="/" /> : <Auth />
+            }
           />
           {/* <Route exact path="/login" element={<Login/>}/>
             <Route exact path="/recovery-password" element={<RecoveryPassword/>}/>
@@ -77,7 +84,7 @@ class App extends Component {
 }
 
 const mapStateToProps = createStructuredSelector({
-  currentUser: selectCurrentUser
+  currentUser: selectCurrentUser,
 });
 
 const mapDispatchToProps = (dispatch) => ({
