@@ -1,12 +1,14 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import CollectionItem from "../collection-item/collection-item.component";
+import { CollectionPreviewContainer, PreviewContainer, TitleContainer } from "./collection-preview.styles";
 
-import "./collection-preview.styles.scss";
-
-const CollectionPreview = ({ title, items }) => (
-  <div className="collection-preview">
-    <h1 className="title">{title.toUpperCase()}</h1>
-    <div className="preview">
+const CollectionPreview = ({ title, items }) => {
+  const routeTitle = title.toLowerCase()
+  const displayTitle = title.toUpperCase()
+  return <CollectionPreviewContainer>
+    <TitleContainer><Link to={`/shop/${routeTitle}`}>{displayTitle}</Link></TitleContainer>
+    <PreviewContainer>
       {items
         // can preferably create a seperate collection selector that already filters the required number of items
         // before passing to collection-overview and then collection-preview component
@@ -14,8 +16,8 @@ const CollectionPreview = ({ title, items }) => (
         .map((item) => (
           <CollectionItem key={item.id} item={item} />
         ))}
-    </div>
-  </div>
-);
+    </PreviewContainer>
+  </CollectionPreviewContainer>
+};
 
 export default CollectionPreview;
