@@ -14,8 +14,8 @@ import { createStructuredSelector } from "reselect";
 import { selectCurrentUser } from "./redux/user/user.selector";
 import CheckoutPage from "./pages/checkout/checkout.component";
 import { selectIsCollectionLoaded } from "./redux/shop/shop.selector";
-import CollectionsOverviewContainer from "./components/collections-overview/collections-overview.container";
-import CollectionPageContainer from "./pages/collection/collection.container";
+import { default as CollectionsOverview } from "./components/collections-overview/collections-overview.container";
+import { default as CollectionPage } from "./pages/collection/collection.container";
 
 class App extends Component {
   unSubscribeFromAuth = null;
@@ -75,11 +75,11 @@ class App extends Component {
         <Routes>
           <Route exact path="/" element={<HomePage />} />
           <Route path="/shop" element={<ShopPage />}>
-            <Route index element={<CollectionsOverviewContainer />} />
+            <Route index element={<CollectionsOverview />} />
             <Route
               exact
               path=":collectionId"
-              element={<CollectionPageContainer />}
+              element={<CollectionPage />}
             />
           </Route>
           <Route exact path="/checkout" element={<CheckoutPage />} />
