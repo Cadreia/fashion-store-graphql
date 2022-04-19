@@ -17,3 +17,9 @@ export const TOGGLE_CART_HIDDEN = gql`
     toggleCartHidden @client
   }
 `;
+
+export const ADD_ITEM_TO_CART = gql`
+  mutation AddItemToCart($item: Item!) {
+    addItemToCart(item: $item) @client
+  }
+`;
