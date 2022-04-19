@@ -1,5 +1,5 @@
 import { Query } from "react-apollo";
-import { GET_CART_HIDDEN } from "../../graphql/resolvers";
+import { GET_CART_HIDDEN } from "../../graphql/queries";
 import Header from "./header.component";
 
 const HeaderContainer = () => (

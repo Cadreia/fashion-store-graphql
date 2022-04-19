@@ -1,14 +1,14 @@
 import { gql } from "apollo-boost";
+import { addItemToCartUtil } from "../redux/cart/cart.utils";
+import { GET_CART_HIDDEN, GET_CART_ITEMS } from "./queries";
 
 export const typeDefs = gql`
+  extend type Item {
+    quantity: int
+  }
   extend type Mutation {
     ToggleCartHidden: Boolean!
-  }
-`;
-
-export const GET_CART_HIDDEN = gql`
-  {
-    cartHidden @client
+    AddItemToCart(item: Item): [Item]!
   }
 `;
 
@@ -25,6 +25,19 @@ export const resolvers = {
         },
       });
       return !cartHidden;
+    },
+    addItemToCart: (_root, { item }, { cache }) => {
+      const { cartItems } = cache.readQuery({
+        query: GET_CART_ITEMS,
+      });
+      const newCartItems = addItemToCartUtil(cartItems, item);
+      cache.writeQuery({
+        query: GET_CART_ITEMS,
+        data: {
+          cartItems: newCartItems,
+        },
+      });
+      return newCartItems;
     },
   },
 };

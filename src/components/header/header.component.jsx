@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { createStructuredSelector } from "reselect";
 import logo from "../../assets/store.png";
 import { selectCurrentUser } from "../../redux/user/user.selector";
-import CartDropdown from "../cart-dropdown/cart-dropdown.component";
+import { default as CartDropdown} from "../cart-dropdown/cart-dropdown.container";
 import { default as CartIcon } from "../cart-icon/cart-icon.container";
 import {
   HeaderContainer,
