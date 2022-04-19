@@ -3,7 +3,7 @@ import "./App.css";
 import HomePage from "./pages/home/homepage.component";
 import { Routes, Route, Navigate } from "react-router-dom";
 import ShopPage from "./pages/shop/shoppage.component";
-import Header from "./components/header/header.component";
+import { default as Header } from "./components/header/header.container";
 import Auth from "./pages/auth/auth.component";
 import { auth, createUserProfileDocument } from "./firebase/firebase.utils";
 import { onAuthStateChanged, signOut } from "firebase/auth";
@@ -76,11 +76,7 @@ class App extends Component {
           <Route exact path="/" element={<HomePage />} />
           <Route path="/shop" element={<ShopPage />}>
             <Route index element={<CollectionsOverview />} />
-            <Route
-              exact
-              path=":collectionId"
-              element={<CollectionPage />}
-            />
+            <Route exact path=":collectionId" element={<CollectionPage />} />
           </Route>
           <Route exact path="/checkout" element={<CheckoutPage />} />
           <Route
