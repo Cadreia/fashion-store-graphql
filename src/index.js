@@ -15,7 +15,11 @@ import { createHttpLink } from "apollo-link-http";
 import { InMemoryCache } from "apollo-boost";
 import { ApolloClient } from "apollo-boost";
 import { typeDefs, resolvers } from "./graphql/resolvers";
-import { GET_CART_HIDDEN, GET_CART_ITEMS } from "./graphql/queries";
+import {
+  GET_CART_HIDDEN,
+  GET_CART_ITEMS,
+  GET_CART_ITEM_COUNT,
+} from "./graphql/queries";
 
 const httpLink = createHttpLink({
   uri: "https://crwn-clothing.com",
@@ -30,22 +34,25 @@ const client = new ApolloClient({
   resolvers,
 });
 
-client.writeQuery(
-  {
-    query: GET_CART_HIDDEN,
-    data: {
-      cartHidden: true,
-    },
-  }
-);
-client.writeQuery(
-  {
-    query: GET_CART_ITEMS,
-    data: {
-      cartItems: [],
-    },
-  }
-)
+client.writeQuery({
+  query: GET_CART_HIDDEN,
+  data: {
+    cartHidden: true,
+  },
+});
+client.writeQuery({
+  query: GET_CART_ITEMS,
+  data: {
+    cartItems: [],
+  },
+});
+
+client.writeQuery({
+  query: GET_CART_ITEM_COUNT,
+  data: {
+    cartItemsCount: 0,
+  },
+});
 
 // client.query({
 //   query: gql`

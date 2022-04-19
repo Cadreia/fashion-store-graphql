@@ -12,6 +12,12 @@ export const GET_CART_ITEMS = gql`
   }
 `;
 
+export const GET_CART_ITEM_COUNT = gql`
+  {
+    cartItemsCount @client
+  }
+`;
+
 export const TOGGLE_CART_HIDDEN = gql`
   mutation ToggleCartHidden {
     toggleCartHidden @client

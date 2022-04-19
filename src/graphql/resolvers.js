@@ -1,6 +1,7 @@
 import { gql } from "apollo-boost";
 import { addItemToCartUtil } from "../redux/cart/cart.utils";
-import { GET_CART_HIDDEN, GET_CART_ITEMS } from "./queries";
+import { getCartItemCount } from "./cart.utils";
+import { GET_CART_HIDDEN, GET_CART_ITEMS, GET_CART_ITEM_COUNT } from "./queries";
 
 export const typeDefs = gql`
   extend type Item {
@@ -37,6 +38,12 @@ export const resolvers = {
           cartItems: newCartItems,
         },
       });
+      cache.writeQuery({
+        query: GET_CART_ITEM_COUNT,
+        data: {
+          cartItemsCount: getCartItemCount(newCartItems)
+        }
+      })
       return newCartItems;
     },
   },
