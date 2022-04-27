@@ -1,9 +1,6 @@
-import React, { Component } from "react";
-import HomePage from "./pages/home/homepage.component";
+import React, { Component, lazy } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
-import ShopPage from "./pages/shop/shoppage.component";
 import { default as Header } from "./components/header/header.container";
-import Auth from "./pages/auth/auth.component";
 import { auth, createUserProfileDocument } from "./firebase/firebase.utils";
 import { onAuthStateChanged, signOut } from "firebase/auth";
 import { onSnapshot } from "firebase/firestore";
@@ -11,11 +8,17 @@ import { connect } from "react-redux";
 import { setCurrentUser } from "./redux/user/user.actions";
 import { createStructuredSelector } from "reselect";
 import { selectCurrentUser } from "./redux/user/user.selector";
-import CheckoutPage from "./pages/checkout/checkout.component";
 import { selectIsCollectionLoaded } from "./redux/shop/shop.selector";
-import { default as CollectionsOverview } from "./components/collections-overview/collections-overview.container";
-import { default as CollectionPage } from "./pages/collection/collection.container";
 import { GlobalStyle } from "./global.styles";
+import { Suspense } from "react";
+import Spinner from "./components/spinner/spinner.component";
+
+const HomePage = lazy(() => import("./pages/home/homepage.component"));
+const ShopPage = lazy(() => import("./pages/shop/shoppage.component"));
+const Auth = lazy(() => import("./pages/auth/auth.component"));
+const CheckoutPage = lazy(() => import("./pages/checkout/checkout.component"));
+const CollectionsOverview = lazy(() => import('./components/collections-overview/collections-overview.container'))
+const CollectionPage = lazy(() => import('./pages/collection/collection.container'))
 
 class App extends Component {
   unSubscribeFromAuth = null;
@@ -73,24 +76,26 @@ class App extends Component {
       <div>
         <GlobalStyle />
         <Header logUserOut={this.logUserOut} />
-        <Routes>
-          <Route exact path="/" element={<HomePage />} />
-          <Route path="/shop" element={<ShopPage />}>
-            <Route index element={<CollectionsOverview />} />
-            <Route exact path=":collectionId" element={<CollectionPage />} />
-          </Route>
-          <Route exact path="/checkout" element={<CheckoutPage />} />
-          <Route
-            exact
-            path="/auth"
-            element={
-              this.props.currentUser ? <Navigate replace to="/" /> : <Auth />
-            }
-          />
-          {/* <Route exact path="/login" element={<Login/>}/>
+        <Suspense fallback={<Spinner />}>
+          <Routes>
+            <Route exact path="/" element={<HomePage />} />
+            <Route path="/shop" element={<ShopPage />}>
+              <Route index element={<CollectionsOverview />} />
+              <Route exact path=":collectionId" element={<CollectionPage />} />
+            </Route>
+            <Route exact path="/checkout" element={<CheckoutPage />} />
+            <Route
+              exact
+              path="/auth"
+              element={
+                this.props.currentUser ? <Navigate replace to="/" /> : <Auth />
+              }
+            />
+            {/* <Route exact path="/login" element={<Login/>}/>
             <Route exact path="/recovery-password" element={<RecoveryPassword/>}/>
             <Route path="*" element={<NotFound/>}/> */}
-        </Routes>
+          </Routes>
+        </Suspense>
       </div>
     );
   }
