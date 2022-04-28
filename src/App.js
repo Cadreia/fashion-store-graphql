@@ -12,13 +12,18 @@ import { selectIsCollectionLoaded } from "./redux/shop/shop.selector";
 import { GlobalStyle } from "./global.styles";
 import { Suspense } from "react";
 import Spinner from "./components/spinner/spinner.component";
+import ErrorBoundary from "./components/error-boundary/error-boundary.component";
 
 const HomePage = lazy(() => import("./pages/home/homepage.component"));
 const ShopPage = lazy(() => import("./pages/shop/shoppage.component"));
 const Auth = lazy(() => import("./pages/auth/auth.component"));
 const CheckoutPage = lazy(() => import("./pages/checkout/checkout.component"));
-const CollectionsOverview = lazy(() => import('./components/collections-overview/collections-overview.container'))
-const CollectionPage = lazy(() => import('./pages/collection/collection.container'))
+const CollectionsOverview = lazy(() =>
+  import("./components/collections-overview/collections-overview.container")
+);
+const CollectionPage = lazy(() =>
+  import("./pages/collection/collection.container")
+);
 
 class App extends Component {
   unSubscribeFromAuth = null;
@@ -76,26 +81,36 @@ class App extends Component {
       <div>
         <GlobalStyle />
         <Header logUserOut={this.logUserOut} />
-        <Suspense fallback={<Spinner />}>
-          <Routes>
-            <Route exact path="/" element={<HomePage />} />
-            <Route path="/shop" element={<ShopPage />}>
-              <Route index element={<CollectionsOverview />} />
-              <Route exact path=":collectionId" element={<CollectionPage />} />
-            </Route>
-            <Route exact path="/checkout" element={<CheckoutPage />} />
-            <Route
-              exact
-              path="/auth"
-              element={
-                this.props.currentUser ? <Navigate replace to="/" /> : <Auth />
-              }
-            />
-            {/* <Route exact path="/login" element={<Login/>}/>
+        <ErrorBoundary>
+          <Suspense fallback={<Spinner />}>
+            <Routes>
+              <Route exact path="/" element={<HomePage />} />
+              <Route path="/shop" element={<ShopPage />}>
+                <Route index element={<CollectionsOverview />} />
+                <Route
+                  exact
+                  path=":collectionId"
+                  element={<CollectionPage />}
+                />
+              </Route>
+              <Route exact path="/checkout" element={<CheckoutPage />} />
+              <Route
+                exact
+                path="/auth"
+                element={
+                  this.props.currentUser ? (
+                    <Navigate replace to="/" />
+                  ) : (
+                    <Auth />
+                  )
+                }
+              />
+              {/* <Route exact path="/login" element={<Login/>}/>
             <Route exact path="/recovery-password" element={<RecoveryPassword/>}/>
             <Route path="*" element={<NotFound/>}/> */}
-          </Routes>
-        </Suspense>
+            </Routes>
+          </Suspense>
+        </ErrorBoundary>
       </div>
     );
   }
