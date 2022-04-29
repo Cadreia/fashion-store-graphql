@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import "./App.css";
 import HomePage from "./pages/home/homepage.component";
 import { Routes, Route, Navigate } from "react-router-dom";
 import ShopPage from "./pages/shop/shoppage.component";
@@ -16,6 +15,7 @@ import CheckoutPage from "./pages/checkout/checkout.component";
 import { selectIsCollectionLoaded } from "./redux/shop/shop.selector";
 import { default as CollectionsOverview } from "./components/collections-overview/collections-overview.container";
 import { default as CollectionPage } from "./pages/collection/collection.container";
+import { GlobalStyle } from "./global.styles";
 
 class App extends Component {
   unSubscribeFromAuth = null;
@@ -71,6 +71,7 @@ class App extends Component {
   render() {
     return (
       <div>
+        <GlobalStyle />
         <Header logUserOut={this.logUserOut} />
         <Routes>
           <Route exact path="/" element={<HomePage />} />
